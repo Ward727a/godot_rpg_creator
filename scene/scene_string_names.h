@@ -63,6 +63,9 @@ public:
 	StringName tree_exiting;
 	StringName tree_exited;
 	StringName ready;
+	StringName process;
+	StringName physics_process;
+	StringName notification;
 	StringName size_flags_changed;
 	StringName minimum_size_changed;
 	StringName sleeping_state_changed;

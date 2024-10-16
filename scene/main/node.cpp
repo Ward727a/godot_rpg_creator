@@ -50,13 +50,16 @@ int Node::orphan_node_count = 0;
 thread_local Node *Node::current_process_thread_group = nullptr;
 
 void Node::_notification(int p_notification) {
+	emit_signal(SceneStringName(notification), p_notification);
 	switch (p_notification) {
 		case NOTIFICATION_PROCESS: {
 			GDVIRTUAL_CALL(_process, get_process_delta_time());
+			emit_signal(SceneStringName(process), get_process_delta_time());
 		} break;
 
 		case NOTIFICATION_PHYSICS_PROCESS: {
 			GDVIRTUAL_CALL(_physics_process, get_physics_process_delta_time());
+			emit_signal(SceneStringName(physics_process), get_physics_process_delta_time());
 		} break;
 
 		case NOTIFICATION_ENTER_TREE: {
@@ -3748,6 +3751,9 @@ void Node::_bind_methods() {
 
 	ADD_SIGNAL(MethodInfo("ready"));
 	ADD_SIGNAL(MethodInfo("renamed"));
+	ADD_SIGNAL(MethodInfo("process"));
+	ADD_SIGNAL(MethodInfo("physics_process"));
+	ADD_SIGNAL(MethodInfo("p_notification"));
 	ADD_SIGNAL(MethodInfo("tree_entered"));
 	ADD_SIGNAL(MethodInfo("tree_exiting"));
 	ADD_SIGNAL(MethodInfo("tree_exited"));
